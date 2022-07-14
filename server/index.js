@@ -7,12 +7,13 @@ app.use(cors());
 
 app.use(express.json());
 
-const { getCompliment, getfortune,gethaircut,posthaircut,rate } = require('./controller');
-
+const { getCompliment, getFortune, createUser, incUser, delUser,getplayer } = require('./controller')
 
 app.get("/api/compliment", getCompliment);
-app.get("/api/fortune", getfortune);
-app.get("/api/haircut",gethaircut);
-app.post("/api/haircut/:id",posthaircut);
-app.get("/api/holidays",rate)
+app.get("/api/fortune", getFortune);
+app.post("/api/createUser", createUser)
+app.put("/api/incUser/:name", incUser)
+app.put("/api/delUser/:name", delUser)
+app.get("/api/player",getplayer)
+
 app.listen(4000, () => console.log("Server running on 4000"));

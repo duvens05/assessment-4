@@ -1,8 +1,3 @@
-// let img1 = document.getElementById("img1");
-// let img2 = document.getElementById("img2");
-// let img3 = document.getElementById("img3");
-const haircuts = require('./db.json')
-let globalID = 4
 module.exports = {
 
     getCompliment: (req, res) => {
@@ -14,40 +9,52 @@ module.exports = {
       
         res.status(200).send(randomCompliment);
     },
-    getfortune: (req, res) =>{
-        const fortunes = ["A beautiful, smart, and loving person will be coming into your life.", "A dubious friend may be an enemy in camouflage.","A faithful friend is a strong defense."]
+    getFortune: (req, res) => {
+        const fortunes = [
+            "Soon Brian Pagani will eat Portillo's with Adrian",
+            "Follow a rainbow to find rain",
+            "Just be yourself",
+            "A fresh start will put you on your way",
+            "Jared will be unlocked upon completion of the class",
+            "You will assist a puffin with your gloved hand",
+        ]
+
         let randomIndex = Math.floor(Math.random() * fortunes.length);
-        let randomfortune = fortunes[randomIndex];
-        res.status(200).send(randomfortune);
-    },
-    
-    gethaircut: (req, res)=>{
-        
-        // const haircuts = ['mohawk','dreads','bald']
-        
+        let randomFortune = fortunes[randomIndex];
 
-        let randomIndex = Math.floor(Math.random() * haircuts.length);
-        let randomhaircut = haircuts[randomIndex];
-      
-        res.status(200).send(randomhaircut.title);
+        res.status(200).send(randomFortune);
     },
-    posthaircut: (req, res)=>{
-        const {title} = req.body;
-    let newhaircut = {
-        id: globalID,
-        title
-    }
-    haircuts.push(newhaircut);
-    globalID++;
-    res.status(200).send(haircuts.length);
-        
+    createUser: (req, res) => {
+        database.push(req.body)
+        res.status(200).send({success: true, info: database})
     },
-    rate: (req,res) =>{
-        const rating = ['5*',"4*","3*"]
-        let randomIndex = Math.floor(Math.random() * rating.length);
-        let randomrating = rating[randomIndex];
-      
-        res.status(200).send(randomrating);
+    incUser: (req, res) => {
+        const name = req.params.name
+        for (let i=0; i<database.length; i++) {
+            if (database[i].name === name) {
+                database[i].power_level++
+            }
+        }
+        res.status(200).send({success: true, info: database})
+    },
+    delUser: (req, res) => {
+        const name = req.params.name
+        for (let i=0; i<database.length; i++) {
+            if (database[i].name === name) {
+                database.splice(i, 1);
+            }
+        }
+        res.status(200).send({success: true, info: database})
+    },
+    getplayer: (req,res)=>{
+        res.status(200).send(database)
+    },
 
-    }
-};
+}
+
+const database = [
+    {
+        name:'duvens',
+        power_level:55
+    },
+]
